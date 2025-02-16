@@ -1,0 +1,81 @@
+import React from "react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, Search } from "lucide-react";
+
+export default function Home() {
+  const [trip, setTrip] = useState({ destination: "", budget: "", details: "" });
+
+  const handleChange = (e) => {
+    setTrip({ ...trip, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Trip request submitted! We'll get back to you soon.");
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white flex flex-col items-center p-6">
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gold">Snowbound Travel</h1>
+        <p className="text-lg text-gray-400">Find the best travel deals and request a custom trip.</p>
+      </header>
+      
+      <div className="flex flex-wrap justify-center gap-6">
+        {/* Trip Search */}
+        <Card className="w-96 bg-gray-900">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Search className="text-gold" /> Search Flights & Hotels
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Input type="text" placeholder="Enter destination..." className="mb-4" />
+            <Button className="bg-gold text-black w-full">Search Deals</Button>
+          </CardContent>
+        </Card>
+
+        {/* Trip Request */}
+        <Card className="w-96 bg-gray-900">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Mail className="text-gold" /> Request a Custom Trip
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <Input
+                type="text"
+                name="destination"
+                placeholder="Destination"
+                value={trip.destination}
+                onChange={handleChange}
+                className="mb-4"
+              />
+              <Input
+                type="text"
+                name="budget"
+                placeholder="Budget"
+                value={trip.budget}
+                onChange={handleChange}
+                className="mb-4"
+              />
+              <Textarea
+                name="details"
+                placeholder="Trip details"
+                value={trip.details}
+                onChange={handleChange}
+                className="mb-4"
+              />
+              <Button type="submit" className="bg-gold text-black w-full">Submit Request</Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
